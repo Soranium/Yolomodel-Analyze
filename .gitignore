@@ -1,0 +1,38 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
+env/
+
+# YOLO model weights (large files)
+*.pt
+*.onnx
+*.engine
+
+# Dataset / media (large files)
+import/
+export/
+*.mp4
+*.avi
+*.mov
+
+# Generated report images
+*.png
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Claude
+*.claude

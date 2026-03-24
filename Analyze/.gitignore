@@ -1,0 +1,18 @@
+# Dataset directories (images & labels are too large for git)
+import/
+export/
+
+*.claude
+
+# Generated report images
+*.png
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# OS
+Thumbs.db
+.DS_Store

@@ -1,0 +1,239 @@
+{
+  "summary": {
+    "total_images": 4909,
+    "total_instances": 12046,
+    "mean_instances_per_image": 2.45,
+    "std_instances_per_image": 1.4,
+    "max_instances_per_image": 22,
+    "images_with_no_label": 0
+  },
+  "train_val_split": {
+    "train": {
+      "images": 4172,
+      "instances": 10229,
+      "per_class": {
+        "1_1": 5245,
+        "0_0": 4984
+      }
+    },
+    "val": {
+      "images": 737,
+      "instances": 1817,
+      "per_class": {
+        "1_1": 922,
+        "0_0": 895
+      }
+    }
+  },
+  "class_detail": {
+    "0_0": {
+      "count": 5879,
+      "ratio": 0.488,
+      "polygon_area": {
+        "mean": 0.066941,
+        "std": 0.104601,
+        "p10": 0.002166,
+        "p50": 0.02668,
+        "p90": 0.185636
+      },
+      "bbox_area": {
+        "mean": 0.108286,
+        "p10": 0.004954,
+        "p50": 0.048565,
+        "p90": 0.297664
+      },
+      "aspect_ratio": {
+        "mean": 0.8377,
+        "std": 0.5382,
+        "min": 0.015,
+        "max": 10.3215
+      },
+      "center_position": {
+        "mean_x": 0.5119,
+        "mean_y": 0.5828,
+        "std_x": 0.0972,
+        "std_y": 0.1399
+      },
+      "vertex_count": {
+        "mean": 103.3,
+        "min": 4,
+        "max": 605
+      },
+      "edge_touch_ratio": 0.0924
+    },
+    "1_1": {
+      "count": 6167,
+      "ratio": 0.512,
+      "polygon_area": {
+        "mean": 0.059815,
+        "std": 0.074924,
+        "p10": 0.001094,
+        "p50": 0.030333,
+        "p90": 0.166031
+      },
+      "bbox_area": {
+        "mean": 0.10824,
+        "p10": 0.001869,
+        "p50": 0.054199,
+        "p90": 0.302857
+      },
+      "aspect_ratio": {
+        "mean": 1.1287,
+        "std": 0.9768,
+        "min": 0.0313,
+        "max": 21.8348
+      },
+      "center_position": {
+        "mean_x": 0.5137,
+        "mean_y": 0.4394,
+        "std_x": 0.2485,
+        "std_y": 0.2419
+      },
+      "vertex_count": {
+        "mean": 141.9,
+        "min": 4,
+        "max": 1884
+      },
+      "edge_touch_ratio": 0.484
+    }
+  },
+  "size_distribution": {
+    "polygon_area": {
+      "tiny(<0.005)": 0.1866,
+      "small(0.005-0.01)": 0.104,
+      "medium(0.01-0.05)": 0.346,
+      "large(0.05-0.2)": 0.2876,
+      "xlarge(>=0.2)": 0.0757,
+      "percentiles": {
+        "p5": 0.000436,
+        "p10": 0.001668,
+        "p25": 0.007875,
+        "p50": 0.028253,
+        "p75": 0.081409,
+        "p90": 0.172453,
+        "p95": 0.246609
+      }
+    },
+    "bbox_area_percentiles": {
+      "p10": 0.00322,
+      "p50": 0.051082,
+      "p90": 0.301035
+    }
+  },
+  "aspect_ratio": {
+    "mean": 0.9867,
+    "std": 0.8069,
+    "min": 0.015,
+    "max": 21.8348,
+    "narrow(<0.5)": 0.1498,
+    "square(0.5-2)": 0.793,
+    "wide(>2)": 0.0572
+  },
+  "spatial_distribution": {
+    "center_position": {
+      "mean_x": 0.5129,
+      "mean_y": 0.5094,
+      "std_x": 0.1903,
+      "std_y": 0.2113
+    },
+    "grid_5x5_counts": [
+      [
+        197,
+        247,
+        268,
+        271,
+        211
+      ],
+      [
+        181,
+        424,
+        851,
+        517,
+        211
+      ],
+      [
+        194,
+        527,
+        2721,
+        692,
+        243
+      ],
+      [
+        147,
+        458,
+        2019,
+        524,
+        216
+      ],
+      [
+        78,
+        124,
+        425,
+        191,
+        109
+      ]
+    ]
+  },
+  "polygon_complexity": {
+    "mean_vertices": 123.1,
+    "std_vertices": 98.1,
+    "min_vertices": 4,
+    "max_vertices": 1884,
+    "percentiles": {
+      "p10": 28,
+      "p50": 98,
+      "p90": 251
+    }
+  },
+  "edge_touch": {
+    "overall_ratio": 0.2929,
+    "by_side": {
+      "top": 1577,
+      "bottom": 966,
+      "left": 959,
+      "right": 964
+    },
+    "by_side_ratio": {
+      "top": 0.1309,
+      "bottom": 0.0802,
+      "left": 0.0796,
+      "right": 0.08
+    }
+  },
+  "overlap_analysis": {
+    "0-1": {
+      "total_pairs": 7758,
+      "mean_iou": 0.0616,
+      "ratio_iou>=0.1": 0.2311,
+      "ratio_iou>=0.3": 0.0418,
+      "ratio_iou>=0.5": 0.0048
+    },
+    "1-1": {
+      "total_pairs": 4554,
+      "mean_iou": 0.0145,
+      "ratio_iou>=0.1": 0.0417,
+      "ratio_iou>=0.3": 0.0048,
+      "ratio_iou>=0.5": 0.0026
+    },
+    "0-0": {
+      "total_pairs": 1271,
+      "mean_iou": 0.019,
+      "ratio_iou>=0.1": 0.0574,
+      "ratio_iou>=0.3": 0.0063,
+      "ratio_iou>=0.5": 0.0024
+    }
+  },
+  "image_density_distribution": {
+    "0_instances": 0,
+    "1_instances": 1278,
+    "2_instances": 1529,
+    "3_instances": 1298,
+    "4_instances": 487,
+    "5+_instances": 317
+  },
+  "augmentation_hints": [
+    "tiny objects=18.7% → Mosaic/MixUp augmentationで小物体の学習機会を増やす",
+    "spatial_cv=1.24 → 空間偏りあり。RandomAffine/Translation augmentationが有効",
+    "mean_vertices=123 → ポリゴンが複雑。学習時のマスク解像度を上げることを検討"
+  ]
+}
