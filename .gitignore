@@ -16,6 +16,8 @@ env/
 # Dataset / media (large files)
 import/
 export/
+*-dataset/
+*-dataset.zip
 *.mp4
 *.avi
 *.mov
