@@ -18,6 +18,7 @@ import/
 export/
 *-dataset/
 *-dataset.zip
+SEX-2000image-dataset/
 *.mp4
 *.avi
 *.mov
