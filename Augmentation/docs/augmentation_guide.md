@@ -1,7 +1,34 @@
-# YOLO セグメンテーション Augmentation ガイド
+# YOLO セグメンテーション 弱点補強 Augmentation ガイド
 
-YOLOv26 セグメンテーションデータセットに対する
-Augmentation 画像・ラベル自動生成の設計ドキュメント。
+モデルの弱点解析結果（`Analyze/model_weakness_report.json`）をもとに、
+**苦手な条件を重点的に補強する**Augmentationデータを自動生成するスクリプトの設計書。
+
+ランダムなAugmentationではなく、「弱い部分を狙い撃ちする」のがポイント。
+
+---
+
+## 前提: Analyze からの入力
+
+このスクリプトは `Analyze/model_weakness_report.json` を読み込んで動作する。
+そのため **Analyze の弱点解析スクリプトが先に完成している必要がある**。
+
+`model_weakness_report.json` の中身の例:
+```json
+{
+  "weakness_by_size": {
+    "tiny(<5%)": {"detection_rate": 0.45}
+  },
+  "weakness_by_position": {
+    "edge": {"detection_rate": 0.61}
+  },
+  "augmentation_priority": [
+    "tiny objects: detection_rate=0.45 → scale + mosaic",
+    "edge objects: detection_rate=0.61 → translate"
+  ]
+}
+```
+
+弱点の `detection_rate` が低い条件ほど、Augmentation の生成数・強度を上げる。
 
 ---
 
@@ -205,7 +232,59 @@ overlap_mask: true     # 重なりマスク対応
 
 ---
 
-## 課題と対策の対応表
+## 弱点 → Augmentation の自動マッピング
+
+スクリプトは `model_weakness_report.json` を読み込み、
+以下のルールで Augmentation 戦略を自動決定する:
+
+### マッピングルール
+
+| 弱点の種類 | detection_rate が低い場合 | 適用するAugmentation | 調整方法 |
+|-----------|------------------------|---------------------|---------|
+| **小物体** | tiny < 0.6 | Mosaic合成 / Scale拡大 | 小物体画像の生成数を2倍、scale_range上限を1.5xに |
+| **画像端** | edge < 0.7 | 平行移動 / 反転 | translate_range を ±20% に拡大 |
+| **角** | corner < 0.6 | 大きめの平行移動 + 反転 | translate_range を ±25% に拡大 |
+| **特定クラス** | class X < 0.7 | そのクラスの画像を多めに生成 | 生成数を1.5〜2倍に |
+| **重なり** | overlap < 0.7 | Copy-Paste で重なりシーンを作成 | 意図的に他オブジェクトを貼り付け |
+| **エッジ接触** | edge_touch < 0.7 | 平行移動で端に寄せる | オブジェクトが端に来るようtranslate |
+
+### 生成数の重み付け
+
+```python
+# detection_rate が低いほど多く生成する
+base_augments = 3  # デフォルト生成数
+
+def calc_weight(detection_rate):
+    """弱い条件ほど生成数を増やす"""
+    if detection_rate < 0.5:
+        return 3.0   # 3倍生成
+    elif detection_rate < 0.7:
+        return 2.0   # 2倍生成
+    elif detection_rate < 0.85:
+        return 1.5   # 1.5倍生成
+    else:
+        return 1.0   # 通常
+```
+
+### augmentation_log.json
+
+何をどれだけ生成したかを記録する:
+
+```json
+{
+  "total_original": 2152,
+  "total_augmented": 7530,
+  "by_weakness": {
+    "tiny_objects": {"target_images": 403, "generated": 1209, "augmentations": ["mosaic", "scale"]},
+    "edge_objects": {"target_images": 312, "generated": 624, "augmentations": ["translate", "flip"]},
+    "class_vagina": {"target_images": 580, "generated": 870, "augmentations": ["all"]}
+  }
+}
+```
+
+---
+
+## 課題と対策の対応表（データセット分析ベース）
 
 | 分析レポートの課題 | Augmentation 対策 | 設定 |
 |-------------------|------------------|------|
